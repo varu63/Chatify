@@ -14,24 +14,51 @@ function ContactList() {
   if (isUsersLoading) return <UsersLoadingSkeleton />;
 
   return (
-    <>
-      {allContacts.map((contact) => (
-        <div
-          key={contact._id}
-          className="bg-cyan-500/10 p-4 rounded-lg cursor-pointer hover:bg-cyan-500/20 transition-colors"
-          onClick={() => setSelectedUser(contact)}
-        >
-          <div className="flex items-center gap-3">
-            <div className={`avatar ${onlineUsers.includes(contact._id) ? "online" : "offline"}`}>
-              <div className="size-12 rounded-full">
-                <img src={contact.profilePic || "/avatar.png"} />
+    <div className="space-y-2">
+      {allContacts.map((contact) => {
+        const isOnline = onlineUsers.includes(contact._id);
+
+        return (
+          <div
+            key={contact._id}
+            onClick={() => setSelectedUser(contact)}
+            className="
+              flex items-center gap-3
+              bg-cyan-500/10
+              px-3 sm:px-4
+              py-3
+              rounded-lg
+              cursor-pointer
+              hover:bg-cyan-500/20
+              active:scale-[0.98]
+              transition-all
+            "
+          >
+            {/* Avatar */}
+            <div className={`avatar ${isOnline ? "online" : "offline"}`}>
+              <div className="w-9 sm:w-10 md:w-12 rounded-full">
+                <img
+                  src={contact.profilePic || "/avatar.png"}
+                  alt={contact.fullName}
+                  className="object-cover"
+                />
               </div>
             </div>
-            <h4 className="text-slate-200 font-medium">{contact.fullName}</h4>
+
+            {/* Name */}
+            <div className="min-w-0 flex-1">
+              <h4 className="text-slate-200 font-medium text-sm sm:text-base truncate">
+                {contact.fullName}
+              </h4>
+              <p className="text-xs sm:text-sm text-slate-400">
+                {isOnline ? "Online" : "Offline"}
+              </p>
+            </div>
           </div>
-        </div>
-      ))}
-    </>
+        );
+      })}
+    </div>
   );
 }
+
 export default ContactList;

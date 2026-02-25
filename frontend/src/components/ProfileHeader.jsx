@@ -27,22 +27,30 @@ function ProfileHeader() {
   };
 
   return (
-    <div className="p-6 border-b border-slate-700/50">
+    <div className="px-3 sm:px-4 md:px-6 py-4 border-b border-slate-700/50">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          {/* AVATAR */}
+        
+        {/* LEFT SECTION */}
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          
+          {/* Avatar */}
           <div className="avatar online">
             <button
-              className="size-14 rounded-full overflow-hidden relative group"
-              onClick={() => fileInputRef.current.click()}
+              onClick={() => fileInputRef.current?.click()}
+              className="
+                relative group overflow-hidden rounded-full
+                w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14
+              "
             >
               <img
                 src={selectedImg || authUser.profilePic || "/avatar.png"}
                 alt="User image"
-                className="size-full object-cover"
+                className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                <span className="text-white text-xs">Change</span>
+                <span className="text-white text-[10px] sm:text-xs">
+                  Change
+                </span>
               </div>
             </button>
 
@@ -55,40 +63,55 @@ function ProfileHeader() {
             />
           </div>
 
-          {/* USERNAME & ONLINE TEXT */}
-          <div>
-            <h3 className="text-slate-200 font-medium text-base max-w-[180px] truncate">
+          {/* User Info */}
+          <div className="min-w-0">
+            <h3 className="text-slate-200 font-medium text-sm sm:text-base truncate">
               {authUser.fullName}
             </h3>
-
-            <p className="text-slate-400 text-xs">Online</p>
+            <p className="text-slate-400 text-xs sm:text-sm">Online</p>
           </div>
         </div>
 
-        {/* BUTTONS */}
-        <div className="flex gap-4 items-center">
-          {/* LOGOUT BTN */}
+        {/* RIGHT BUTTONS */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          
+          {/* Logout */}
           <button
-            className="text-slate-400 hover:text-slate-200 transition-colors"
             onClick={logout}
+            className="
+              flex items-center justify-center
+              w-9 h-9 sm:w-10 sm:h-10
+              rounded-lg
+              text-slate-400
+              hover:text-slate-200
+              hover:bg-slate-700/40
+              transition-all
+            "
           >
-            <LogOutIcon className="size-5" />
+            <LogOutIcon className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
 
-          {/* SOUND TOGGLE BTN */}
+          {/* Sound Toggle */}
           <button
-            className="text-slate-400 hover:text-slate-200 transition-colors"
             onClick={() => {
-              // play click sound before toggling
-              mouseClickSound.currentTime = 0; // reset to start
-              mouseClickSound.play().catch((error) => console.log("Audio play failed:", error));
+              mouseClickSound.currentTime = 0;
+              mouseClickSound.play().catch(() => {});
               toggleSound();
             }}
+            className="
+              flex items-center justify-center
+              w-9 h-9 sm:w-10 sm:h-10
+              rounded-lg
+              text-slate-400
+              hover:text-slate-200
+              hover:bg-slate-700/40
+              transition-all
+            "
           >
             {isSoundEnabled ? (
-              <Volume2Icon className="size-5" />
+              <Volume2Icon className="w-4 h-4 sm:w-5 sm:h-5" />
             ) : (
-              <VolumeOffIcon className="size-5" />
+              <VolumeOffIcon className="w-4 h-4 sm:w-5 sm:h-5" />
             )}
           </button>
         </div>
@@ -96,4 +119,5 @@ function ProfileHeader() {
     </div>
   );
 }
+
 export default ProfileHeader;
